@@ -1,8 +1,15 @@
 import { useEffect , useState} from 'react'
 import './App.css'
+import JobForm from '../components/JobForm';
 
 function App() {
     const [jobs,setJobs] = useState([]);
+
+    const addNewJob = (job) => {
+        setJobs([job,...jobs]);
+
+    }
+   
 
     useEffect(()=> {
 
@@ -22,6 +29,7 @@ function App() {
 
     return (
     <>
+     <JobForm addJob={addNewJob}></JobForm>
      <table>
         <thead>
             <tr>
@@ -40,8 +48,9 @@ function App() {
                 <td>{job.job_title}</td>
                 <td>{job.link}</td>
                 <td>{job.status}</td>
-                <td>{job.notes}</td>
                 <td>{job.applied_on}</td>
+                <td>{job.notes}</td>
+                
 
             </tr>))}
 
