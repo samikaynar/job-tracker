@@ -9,6 +9,19 @@ function App() {
         setJobs([job,...jobs]);
 
     }
+
+    const deleteJob = async (id) =>{
+        try{
+            const res = await fetch(`http://localhost:3000/applications/${id}`,{
+            method:"DELETE",
+            })
+            if(!res.ok) return;
+            setJobs(jobs.filter((job) => job.id !== id));
+        }
+        catch(err){
+            console.error("deleting failed",err);
+        }
+    }
    
 
     useEffect(()=> {
@@ -27,6 +40,7 @@ function App() {
 
     },[])
 
+
     return (
     <>
      <JobForm addJob={addNewJob}></JobForm>
@@ -39,6 +53,7 @@ function App() {
                 <th>Status</th>
                 <th>Applied date</th>
                 <th>Notes</th>
+                <th>delete</th>
             </tr>
         </thead>
         <tbody>
@@ -50,8 +65,7 @@ function App() {
                 <td>{job.status}</td>
                 <td>{job.applied_on}</td>
                 <td>{job.notes}</td>
-                
-
+                <td><button onClick={() => deleteJob(job.id)}>delete</button></td>
             </tr>))}
 
         </tbody>

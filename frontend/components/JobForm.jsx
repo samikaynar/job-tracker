@@ -36,10 +36,10 @@ function JobForm({addJob}){
 
     return (
         <form onSubmit={saveChange}>
-            <input type="text" name="company" onChange={handleChange} value={form.company}/>
-            <input type="text" name="job_title" onChange={handleChange} value={form.job_title} />
-            <input type="text" name="link" onChange={handleChange} value={form.link} />
-            <input type="text" name="notes" onChange={handleChange} value={form.notes}  />
+            <input type="text" name="company" onChange={(handleChange)} value={form.company}/>
+            <input type="text" name="job_title" onChange={(handleChange)} value={form.job_title} />
+            <input type="text" name="link" onChange={(handleChange)} value={form.link} />
+            <input type="text" name="notes" onChange={(handleChange)} value={form.notes}  />
             <button type="submit">save</button>
         </form>
         
