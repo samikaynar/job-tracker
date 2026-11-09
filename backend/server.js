@@ -1,6 +1,6 @@
 import express from "express";
 import { pool } from "./db.js";
-   import cors from "cors";
+import cors from "cors";
 const app = express();
 
 app.use(cors());
@@ -43,8 +43,33 @@ app.post("/applications", async (req,res) =>{
 
 })
 
+
+app.patch("/applications/:id", async (req,res) => {
+
+    const id = req.params.id;
+    if(!id){
+        return res.status(400).json({error:"bad request"});
+    }
+    const {status} = req.body || {};
+    if(!status){
+        return res.status(400).json({error:"bad request"});
+    }
+    try{
+        const result = await pool.query("UPDATE applications SET status = $1 WHERE id = $2 RETURNING *",[status,id]);
+        if (result.rowCount === 0){
+            return res.status(404).json({error:"updating process failed"});
+        }
+        return res.status(200).json(result.rows[0]);
+
+    }
+    catch(err){
+        console.error("changing status failed",err);
+        res.status(500).json({ error: "server error" });
+    }
+});
+
 app.delete("/applications/:id", async (req,res) => {
-    const {id} = req.params;
+    const id = req.params.id;
     if(!id){
         return res.status(400).json({error:"bad request"});
 
